@@ -16,6 +16,7 @@
 
 #include <Rotary.h>
 
+
 // library interface description
 class Motor
 {
@@ -28,10 +29,6 @@ class Motor
     int speed;
     int acceleration;
     int getDir(void);
-
-    void doSomething(void);
-
-
   // library-accessible "private" interface
   private:
     boolean direction;
@@ -40,10 +37,9 @@ class Motor
     int encoderPinA;
     int encoderPinB;
     int speedPin;
-    // unsigned char processType;
-    Rotary r(int, int);
-    // Rotary
-    void doSomethingSecret(void);
+    int dir;
+    Rotary r;
+
 };
 
 #endif

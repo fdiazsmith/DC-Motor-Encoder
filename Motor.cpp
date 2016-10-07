@@ -12,30 +12,10 @@
 
 // include this library's description file
 #include "Motor.h"
-
 // include description files for other libraries used (if any)
 #include "HardwareSerial.h"
-#include <Rotary.h>
 
-// Constructor /////////////////////////////////////////////////////////////////
-// Function that handles the creation and setup of instances
-
-Motor::Motor(int _motorPinA, int _motorPinB, int _speedPin, int _encoderPinA, int _encoderPinB)
-{
-  // initialize this instance's variables
-  motorPinA = _motorPinA;
-  motorPinB = _motorPinB;
-  speedPin = _speedPin;
-  encoderPinA = _encoderPinA;
-  encoderPinB = _encoderPinB;
-
-  // do whatever is required to initialize the library
-  pinMode(motorPinA, OUTPUT);
-  pinMode(motorPinB, OUTPUT);
-  pinMode(speedPin, OUTPUT);
-  // r(encoderPinA, encoderPinB);
-}
-Motor::Motor()
+Motor::Motor() : r(3,4)
 {
   // initialize this instance's variables
   motorPinB = 2;
@@ -48,42 +28,38 @@ Motor::Motor()
   pinMode(motorPinB, OUTPUT);
   pinMode(speedPin, OUTPUT);
 
-  r(encoderPinA, encoderPinB);
-  // r.process();
+  dir = 0;
+
+}
+Motor::Motor(int _motorPinA, int _motorPinB, int _speedPin, int _encoderPinA, int _encoderPinB) : r(_encoderPinA,_encoderPinA)
+{
+  // initialize this instance's variables
+  motorPinA = _motorPinA;
+  motorPinB = _motorPinB;
+  speedPin = _speedPin;
+  encoderPinA = _encoderPinA;
+  encoderPinB = _encoderPinB;
+
+  // do whatever is required to initialize the library
+  pinMode(motorPinA, OUTPUT);
+  pinMode(motorPinB, OUTPUT);
+  pinMode(speedPin, OUTPUT);
 
 }
 
-int Motor::getDir(){
-  // int _dir = r.process();
-//   if ( _dir ) {
-//     return _dir == DIR_CW ? 1 : -1 ;
-//   }
-//   else{
-//     return 0;
-//   }
-   return 0;
-}
 // Public Methods //////////////////////////////////////////////////////////////
 // Functions available in Wiring sketches, this library, and other libraries
 
-void Motor::doSomething(void)
-{
-  // eventhough this function is public, it can access
-  // and modify this library's private variables
-  Serial.print("value is ");
-  Serial.println(value);
-
-  // it can also call private functions of this library
-  doSomethingSecret();
+int Motor::getDir(){
+  int _dir = r.process();
+  if ( _dir ) {
+    return _dir == DIR_CW ? 1 : -1 ;
+  }
+  else{
+    return 0;
+  }
 }
+
 
 // Private Methods /////////////////////////////////////////////////////////////
 // Functions only available to other functions in this library
-
-void Motor::doSomethingSecret(void)
-{
-  digitalWrite(13, HIGH);
-  delay(200);
-  digitalWrite(13, LOW);
-  delay(200);
-}
