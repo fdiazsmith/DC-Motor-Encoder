@@ -8,20 +8,41 @@
 #define Motor_h
 
 // include types & constants of Wiring core API
-// #include "WConstants.h" // this crashes platformIO
-#include <Arduino.h>
+#if (ARDUINO >= 100)
+ #include "Arduino.h"
+#else
+ #include "WProgram.h"
+#endif
+
+#include <Rotary.h>
 
 // library interface description
 class Motor
 {
   // user-accessible "public" interface
   public:
-    Motor(int);
+    Motor(void);
+    Motor(int, int, int, int, int);
+
+    int value;
+    int speed;
+    int acceleration;
+    int getDir(void);
+
     void doSomething(void);
+
 
   // library-accessible "private" interface
   private:
-    int value;
+    boolean direction;
+    int motorPinB;
+    int motorPinA;
+    int encoderPinA;
+    int encoderPinB;
+    int speedPin;
+    // unsigned char processType;
+    Rotary r(int, int);
+    // Rotary
     void doSomethingSecret(void);
 };
 

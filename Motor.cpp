@@ -4,28 +4,65 @@
 */
 
 // include core Wiring API
-// #include "WConstants.h" // this crashes platformIO
-#include <Arduino.h>
+#if (ARDUINO >= 100)
+ #include "Arduino.h"
+#else
+ #include "WProgram.h"
+#endif
 
 // include this library's description file
 #include "Motor.h"
 
 // include description files for other libraries used (if any)
 #include "HardwareSerial.h"
+#include <Rotary.h>
 
 // Constructor /////////////////////////////////////////////////////////////////
 // Function that handles the creation and setup of instances
 
-Motor::Motor(int givenValue)
+Motor::Motor(int _motorPinA, int _motorPinB, int _speedPin, int _encoderPinA, int _encoderPinB)
 {
   // initialize this instance's variables
-  value = givenValue;
+  motorPinA = _motorPinA;
+  motorPinB = _motorPinB;
+  speedPin = _speedPin;
+  encoderPinA = _encoderPinA;
+  encoderPinB = _encoderPinB;
 
   // do whatever is required to initialize the library
-  pinMode(13, OUTPUT);
-  Serial.begin(9600);
+  pinMode(motorPinA, OUTPUT);
+  pinMode(motorPinB, OUTPUT);
+  pinMode(speedPin, OUTPUT);
+  // r(encoderPinA, encoderPinB);
+}
+Motor::Motor()
+{
+  // initialize this instance's variables
+  motorPinB = 2;
+  motorPinA = 3;
+  encoderPinA = 4;
+  encoderPinB = 5;
+  speedPin =  6;
+  // do whatever is required to initialize the library
+  pinMode(motorPinA, OUTPUT);
+  pinMode(motorPinB, OUTPUT);
+  pinMode(speedPin, OUTPUT);
+
+  r(encoderPinA, encoderPinB);
+  // r.process();
+
 }
 
+int Motor::getDir(){
+  // int _dir = r.process();
+//   if ( _dir ) {
+//     return _dir == DIR_CW ? 1 : -1 ;
+//   }
+//   else{
+//     return 0;
+//   }
+   return 0;
+}
 // Public Methods //////////////////////////////////////////////////////////////
 // Functions available in Wiring sketches, this library, and other libraries
 
