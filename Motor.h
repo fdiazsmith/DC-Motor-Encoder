@@ -26,12 +26,20 @@ class Motor
     Motor(int, int, int, int, int);
 
     int value;
-    int speed;
+    int speed = 255;
+    void setSpeed(int);
     int acceleration;
     int getDir(void);
+
+    void run(void);
+    void run(int);
+    void stop();
+
+    Rotary getEncoder();
+
   // library-accessible "private" interface
   private:
-    boolean direction;
+
     int motorPinB;
     int motorPinA;
     int encoderPinA;

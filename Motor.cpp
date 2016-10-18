@@ -15,7 +15,7 @@
 // include description files for other libraries used (if any)
 #include "HardwareSerial.h"
 
-Motor::Motor() : r(3,4)
+Motor::Motor() : r(4,5)
 {
   // initialize this instance's variables
   motorPinB = 2;
@@ -27,7 +27,7 @@ Motor::Motor() : r(3,4)
   pinMode(motorPinA, OUTPUT);
   pinMode(motorPinB, OUTPUT);
   pinMode(speedPin, OUTPUT);
-
+  // r(4,5);
   dir = 0;
 
 }
@@ -45,21 +45,53 @@ Motor::Motor(int _motorPinA, int _motorPinB, int _speedPin, int _encoderPinA, in
   pinMode(motorPinB, OUTPUT);
   pinMode(speedPin, OUTPUT);
 
+  Serial.begin(9600);
+  Serial.print(encoderPinA);Serial.print('\t');
+  Serial.println(encoderPinB);
 }
 
 // Public Methods //////////////////////////////////////////////////////////////
 // Functions available in Wiring sketches, this library, and other libraries
 
 int Motor::getDir(){
-  int _dir = r.process();
-  if ( _dir ) {
-    return _dir == DIR_CW ? 1 : -1 ;
-  }
-  else{
-    return 0;
-  }
+  return r.process();
 }
 
+Rotary Motor::getEncoder(){
+  return r;
+}
 
+void Motor::setSpeed(int _speed){
+  speed = _speed;
+}
+
+void Motor::run(){
+  //forward
+  analogWrite(speedPin, speed);//Sets speed variable via PWM
+  digitalWrite(motorPinA, LOW);
+  digitalWrite(motorPinB, HIGH);
+}
+void Motor::run(int _dir){
+  switch(_dir){
+    //forward
+    case 1:
+      analogWrite(speedPin, speed);//Sets speed variable via PWM
+      digitalWrite(motorPinA, LOW);
+      digitalWrite(motorPinB, HIGH);
+      break;
+      //reverse
+    case -1:
+      analogWrite(speedPin, speed);//Sets speed variable via PWM
+        digitalWrite(motorPinA, HIGH);
+      digitalWrite(motorPinB, LOW);
+    break;
+  }
+
+}
+void Motor::stop(){
+  analogWrite(speedPin, 0);//Sets speed variable via PWM
+  digitalWrite(motorPinA, LOW);
+  digitalWrite(motorPinB, HIGH);
+}
 // Private Methods /////////////////////////////////////////////////////////////
 // Functions only available to other functions in this library

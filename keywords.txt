@@ -13,6 +13,10 @@ Motor	KEYWORD1
 #######################################
 
 doSomething	KEYWORD2
+run KEYWORD2
+stop KEYWORD2
+setSpeed KEYWORD2
+getDir KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
