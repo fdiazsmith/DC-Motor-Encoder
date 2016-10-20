@@ -1,7 +1,16 @@
 /*
   Motor.h - Motor library for Wiring - description
-  Fernando Diaz Smith 2016. Free for everybody.
+  Fernando Diaz Smith 2016. Free for everybody with <3 xoxo
+  ** The encoder method was pulled from  Brian Low whom in turned pulled it from Ben Buxton's (Buxtronix)
+
+  if you want to learn how encoders work or just use the library by it self be sure to check their sites.
+
+  Brian Low - https://github.com/brianlow/Rotary
+  Buxtronics - http://www.buxtronix.net/2011/10/rotary-encoders-done-properly.html
+
 */
+
+
 
 // ensure this library description is only included once
 #ifndef Motor_h
@@ -16,6 +25,19 @@
 
 #include <Rotary.h>
 
+// Enable this to emit codes twice per step.
+// #define HALF_STEP
+
+// Enable weak pullups
+#define ENABLE_PULLUPS
+
+// Values returned by 'process'
+// No complete step yet.
+#define DIR_NONE 0x0
+// Clockwise step.
+#define DIR_CW 0x10
+// Counter-clockwise step.
+#define DIR_CCW 0x20
 
 // library interface description
 class Motor
@@ -24,6 +46,7 @@ class Motor
   public:
     Motor(void);
     Motor(int, int, int, int, int);
+
 
     int value;
     int speed = 255;
@@ -34,8 +57,9 @@ class Motor
     void run(void);
     void run(int);
     void stop();
+    void advance(int);
+    unsigned char process();
 
-    Rotary getEncoder();
 
   // library-accessible "private" interface
   private:
@@ -46,7 +70,7 @@ class Motor
     int encoderPinB;
     int speedPin;
     int dir;
-    Rotary r;
+    unsigned char state;
 
 };
 
