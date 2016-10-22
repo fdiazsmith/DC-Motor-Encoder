@@ -23,7 +23,10 @@
  #include "WProgram.h"
 #endif
 
-#include <Rotary.h>
+
+#include <digitalWriteFast.h>  // library for high performance reads and writes by jrraines
+                               // see http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1267553811/0
+                               // and http://code.google.com/p/digitalwritefast/
 
 // Enable this to emit codes twice per step.
 // #define HALF_STEP

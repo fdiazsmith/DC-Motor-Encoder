@@ -168,19 +168,21 @@ void Motor::advance(int _steps){
   run();
   while(n <= _steps){
     if(process()) n++;
-    Serial.println(n);
   }
-
+  // else{
+  //
+  // }
   stop();
 
 }
-
+// digitalReadFast()
 unsigned char Motor::process() {
   // Grab state of input pins.
-  unsigned char pinstate = (digitalRead(encoderPinB) << 1) | digitalRead(encoderPinA);
+  unsigned char pinstate = (digitalReadFast(encoderPinB) << 1) | digitalReadFast(encoderPinA);
   // Determine new state from the pins and state table.
   state = ttable[state & 0xf][pinstate];
   // Return emit bits, ie the generated event.
+  //   Serial.println(_dir == DIR_CW ? "Right" : "Left");
   return state & 0x30;
 }
 
