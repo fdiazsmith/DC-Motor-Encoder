@@ -31,7 +31,7 @@ Motor::Motor() : r(4,5)
   dir = 0;
 
 }
-Motor::Motor(int _motorPinA, int _motorPinB, int _speedPin, int _encoderPinA, int _encoderPinB) : r(_encoderPinA,_encoderPinA)
+Motor::Motor(int _motorPinA, int _motorPinB, int _speedPin, int _encoderPinA, int _encoderPinB) : r(_encoderPinA,_eencoderPinB )
 {
   // initialize this instance's variables
   motorPinA = _motorPinA;
